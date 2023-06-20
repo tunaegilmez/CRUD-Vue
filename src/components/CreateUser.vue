@@ -6,6 +6,7 @@
           <span class="label-text text-warning">Username</span>
         </label>
         <input
+          v-model="name"
           type="text"
           placeholder="Example"
           class="input input-bordered input-primary w-72 max-w-xs"
@@ -16,6 +17,7 @@
           <span class="label-text text-warning">job</span>
         </label>
         <input
+          v-model="job"
           type="text"
           placeholder="Example"
           class="input input-bordered input-primary w-72 max-w-xs"
@@ -27,6 +29,7 @@
         </label>
         <label class="input-group">
           <input
+            v-model="wage"
             type="number"
             placeholder="0.00"
             class="input input-bordered w-full input-primary"
@@ -40,8 +43,42 @@
             ><i class="bi bi-save"></i
           ></span>
         </label>
-        <button class="btn btn-outline btn-primary w-full">Save</button>
+        <router-link to="/">
+          <button
+            @click="addUserHandler()"
+            class="btn btn-outline btn-primary w-full"
+          >
+            Save
+          </button>
+        </router-link>
       </div>
     </form>
   </div>
 </template>
+
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      name: "",
+      job: "",
+      wage: 0,
+    };
+  },
+
+  methods: {
+    ...mapActions("crud", ["addUser"]),
+
+    addUserHandler() {
+      this.addUser({
+        id: Number(Math.random().toFixed(3)),
+        name: this.name,
+        job: this.job,
+        wage: this.wage,
+      });
+    },
+  },
+};
+</script>
