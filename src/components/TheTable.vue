@@ -35,11 +35,13 @@
             <td>{{ user.wage }}</td>
             <td class="flex justify-between">
               <div
+                @click="goUpdatePage(user.id)"
                 class="cursor-pointer hover:bg-primary p-1 rounded-full hover:text-neutral"
               >
                 <i class="bi bi-pen text-lg"></i>
               </div>
               <div
+                @click="deleteHandleUser(user.id)"
                 class="cursor-pointer hover:bg-primary p-1 rounded-full hover:text-neutral"
               >
                 <i class="bi bi-trash3 text-lg"></i>
@@ -50,21 +52,31 @@
       </table>
     </div>
     <div v-else>
-      <h1 class="text-3xl">No Have User</h1>
+      <h1 class="text-3xl">There Are No Users</h1>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
     return {};
   },
-
   computed: {
     ...mapGetters("crud", ["getUsers"]),
+  },
+  methods: {
+    ...mapActions("crud", ["deleteUser"]),
+
+    deleteHandleUser(id) {
+      this.deleteUser(id);
+    },
+
+    goUpdatePage(id) {
+      this.$router.push(`/update/${id}`);
+    },
   },
 };
 </script>
